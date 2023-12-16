@@ -13,7 +13,8 @@ entity AdaptiveTrafficLight is
 end AdaptiveTrafficLight;
 
 architecture Behavioral of AdaptiveTrafficLight is
-    TYPE State IS (IDLE, CROSS, ELDERLY, TRAFFIC, RST, DONE);
+    TYPE State IS (INIT, IDLE, CROSS, ELDERLY, TRAFFIC, RST, DONE);
+    signal presentState : State := INIT;
     signal traffic_density : integer := 0;
     signal green_timer, yellow_timer, red_timer : integer := 0;
 
