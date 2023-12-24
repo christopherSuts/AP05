@@ -7,10 +7,10 @@ ENTITY AdaptiveTrafficLight_TB IS
 END AdaptiveTrafficLight_TB;
 
 ARCHITECTURE behavior OF AdaptiveTrafficLight_TB IS
-    SIGNAL clk : STD_LOGIC := '0'; -- Clock signal
+    SIGNAL clk : STD_LOGIC; -- Clock signal
     SIGNAL traffic_sensor_vertical_one, traffic_sensor_vertical_two,
-    traffic_sensor_horizontal_one, traffic_sensor_horizontal_two : STD_LOGIC := '0';
-    SIGNAL elderly_cross_button : STD_LOGIC := '0';
+    traffic_sensor_horizontal_one, traffic_sensor_horizontal_two : STD_LOGIC;
+    SIGNAL elderly_cross_button : STD_LOGIC;
     SIGNAL road_vertical, road_horizontal : STD_LOGIC_VECTOR(2 DOWNTO 0);
     SIGNAL display_vertical_one, display_vertical_two,
     display_horizontal_one, display_horizontal_two : STD_LOGIC_VECTOR(6 DOWNTO 0);
@@ -52,19 +52,17 @@ BEGIN
     BEGIN
         WHILE (TRUE) LOOP
             clk <= '0';
-            WAIT FOR 500 MS; -- Adjust this value to simulate real-time behavior
+            WAIT FOR 500 ms; -- Adjust this value to simulate real-time behavior
             clk <= '1';
-            WAIT FOR 500 MS; -- Adjust this value to simulate real-time behavior
+            WAIT FOR 500 ms; -- Adjust this value to simulate real-time behavior
         END LOOP;
         WAIT;
     END PROCESS CLK_PROCESS;
 
     STIMULUS_PROCESS : PROCESS
-    BEGIN
-        VARIABLE seed1 : INTEGER := 666; -- seed 1 for impure function
-        VARIABLE seed2 : INTEGER := 69; -- seed 2 for impure function
+        VARIABLE seed1 : INTEGER := 666;
+        VARIABLE seed2 : INTEGER := 69;
 
-        --impure function for randomizing input
         IMPURE FUNCTION randomize_signal RETURN STD_LOGIC IS
             VARIABLE r : real;
             VARIABLE random_int : INTEGER;
@@ -79,6 +77,7 @@ BEGIN
                 RETURN '1';
             END IF;
         END FUNCTION;
+    BEGIN
         LOOP
             -- Randomize input signals
             traffic_sensor_vertical_one <= randomize_signal;
@@ -86,10 +85,8 @@ BEGIN
             traffic_sensor_horizontal_one <= randomize_signal;
             traffic_sensor_horizontal_two <= randomize_signal;
             elderly_cross_button <= randomize_signal;
-
             -- Wait for another 10 seconds before changing inputs again
             WAIT FOR 5 SEC;
         END LOOP;
     END PROCESS STIMULUS_PROCESS;
-
 END behavior;
