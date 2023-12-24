@@ -13,9 +13,6 @@ ENTITY AdaptiveTrafficLight IS
         road_horizontal : OUT STD_LOGIC_VECTOR(2 DOWNTO 0) := "000";
         display_vertical_one, display_vertical_two,
         display_horizontal_one, display_horizontal_two : OUT STD_LOGIC_VECTOR(6 DOWNTO 0)
-        --green_duration : out STD_LOGIC_VECTOR(7 downto 0);    
-        --yellow_duration : out STD_LOGIC_VECTOR(7 downto 0);
-        --red_duration : out STD_LOGIC_VECTOR(7 downto 0)
     );
 END AdaptiveTrafficLight;
 
