@@ -28,7 +28,6 @@ ARCHITECTURE Behavioral OF AdaptiveTrafficLight IS
     TYPE State_Type IS (INIT, RED_VERTICAL_NORMAL, RED_HORIZONTAL_NORMAL, RED_VERTICAL_TRAFFIC,
         RED_HORIZONTAL_TRAFFIC, RED_VERTICAL_ELDERLY, RED_HORIZONTAL_ELDERLY, TRANSITION);
     SIGNAL state : State_Type := INIT;
-    SIGNAL traffic_density : STD_LOGIC;
 
     SIGNAL green_timer_vertical, red_timer_horizontal : INTEGER := 10; -- TOLONG KEMBALIKAN JADI 20
     SIGNAL red_timer_vertical, green_timer_horizontal : INTEGER := 10; -- TOLONG KEMBALIKAN JADI 20
