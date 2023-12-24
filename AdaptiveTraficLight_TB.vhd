@@ -30,22 +30,8 @@ ARCHITECTURE behavior OF AdaptiveTrafficLight_TB IS
         );
     END COMPONENT;
 
-    IMPURE FUNCTION randomize_signal RETURN STD_LOGIC IS
-        VARIABLE r : real;
-        VARIABLE random_int : INTEGER;
-        VARIABLE seed1, seed2 : INTEGER := 999;
-    BEGIN
-        uniform(seed1, seed2, r);
-        random_int := INTEGER(round(r * real(1 - 0 + 1) + real(0) - 0.5));
-        IF random_int = 0 THEN
-            RETURN '0';
-        ELSE
-            RETURN '1';
-        END IF;
-    END FUNCTION;
-
 BEGIN
-    -- Instantiate the DUT (Device Under Test)
+    -- Instantiate the UUT (Unit Under Test)
     UUT : AdaptiveTrafficLight PORT MAP(
         clk => clk,
         traffic_sensor_vertical_one => traffic_sensor_vertical_one,
@@ -75,7 +61,24 @@ BEGIN
 
     STIMULUS_PROCESS : PROCESS
     BEGIN
+        VARIABLE seed1 : INTEGER := 666; -- seed 1 for impure function
+        VARIABLE seed2 : INTEGER := 69; -- seed 2 for impure function
 
+        --impure function for randomizing input
+        IMPURE FUNCTION randomize_signal RETURN STD_LOGIC IS
+            VARIABLE r : real;
+            VARIABLE random_int : INTEGER;
+            VARIABLE max : real := 1.0;
+            VARIABLE min : real := 0.0;
+        BEGIN
+            uniform(seed1, seed2, r);
+            random_int := INTEGER(r * (max - min)) + INTEGER(min);
+            IF random_int = 0 THEN
+                RETURN '0';
+            ELSE
+                RETURN '1';
+            END IF;
+        END FUNCTION;
         LOOP
             -- Randomize input signals
             traffic_sensor_vertical_one <= randomize_signal;
